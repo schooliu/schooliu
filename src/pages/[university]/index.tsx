@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import SchoolPageLayout from "../../components/SchoolPageLayout";
 import { getServerAuthSession } from "../../server/auth";
+import { NextSeo } from "next-seo";
 
 
 const subjects = [
@@ -106,15 +107,37 @@ export default (() => {
   const { university } = router.query;
 
   return (
-    <SchoolPageLayout>
-      <div className="space-y-4">
-        <h1 className="font-bold text-3xl">📚 Matières</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {subjects.map((subject, index) => (
-            <SubjectCard key={subject.slug} subject={subject} university={university} />
-          ))}
+    <>
+      <NextSeo
+        title={`${university} - Schooliu`}
+        description={`Découvrez les cours de Schooliu pour ${university}.`}
+        openGraph={{
+          title: `${university} - Schooliu`,
+          description: `Découvrez les cours de Schooliu pour ${university}.`,
+          images: [
+            {
+              url: `https://schooliu.vercel.app/api/og/university?name=${university}`,
+              width: 800,
+              height: 400,
+              alt: `${university} - Schooliu`,
+              type: "image/png"
+            }
+          ],
+          site_name: "Schooliu"
+
+        }}
+      />
+      <SchoolPageLayout>
+        <div className="space-y-4">
+          <h1 className="font-bold text-3xl">📚 Matières</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {subjects.map((subject, index) => (
+              <SubjectCard key={subject.slug} subject={subject} university={university} />
+            ))}
+          </div>
         </div>
-      </div>
-    </SchoolPageLayout>
+      </SchoolPageLayout>
+    </>
+
   );
 }) satisfies NextPage;
