@@ -1,8 +1,9 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SchoolPageLayout from "../../components/SchoolPageLayout";
+import { getServerAuthSession } from "../../server/auth";
 
 
 const subjects = [
@@ -60,6 +61,22 @@ function randomWorkButtonName(seed: string) {
   return workButtonName[Math.floor(seed.split("").reduce((a, b) => a + b.charCodeAt(0), 0) % workButtonName.length)];
 }
 
+export const getServerSideProps = (async (context) => {
+  const session = await getServerAuthSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false
+      }
+    };
+  }
+  return {
+    props: {
+      session
+    }
+  };
+}) satisfies GetServerSideProps;
 
 function SubjectCard(props: { subject: { image: string; name: string; description: string; slug: string }, university: string | string[] | undefined }) {
   return <div className="card w-full bg-base-100 shadow-xl image-full overflow-hidden">
@@ -94,7 +111,7 @@ export default (() => {
         <h1 className="font-bold text-3xl">📚 Matières</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {subjects.map((subject, index) => (
-            <SubjectCard subject={subject} university={university} />
+            <SubjectCard key={subject.slug} subject={subject} university={university} />
           ))}
         </div>
       </div>

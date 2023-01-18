@@ -7,8 +7,11 @@ import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db";
 
 
-
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/login",
+    error: "/api/auth/error"
+  },
   // Include user.id on session
   callbacks: {
     session({ session, user }) {
@@ -16,7 +19,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = user.id;
       }
       return session;
-    },
+    }
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
