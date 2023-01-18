@@ -20,6 +20,12 @@ import { signIn } from "next-auth/react";
 //     props: {}
 //   };
 // }) satisfies GetServerSideProps;
+
+
+async function signInUser() {
+  await signIn("auth0", { callbackUrl: "/rennes-1" });
+}
+
 export default (() => {
   return (
     <div className="h-screen flex flex-col">
@@ -38,7 +44,7 @@ export default (() => {
             </header>
 
 
-            <button onClick={() => signIn("auth0")} className="btn btn-primary w-full">Connexion</button>
+            <button onClick={() => signInUser()} className="btn btn-primary w-full">Connexion</button>
 
           </div>
         </div>
