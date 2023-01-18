@@ -19,7 +19,7 @@ export default function handler(req: NextRequest) {
         <div style={{ backgroundColor: "#7B71D6" }}
              tw="flex flex-col items-center justify-center bg-white h-full w-full">
           <svg
-            tw="mb-5"
+            style={{ marginBottom: "10px" }}
             height={30}
             fill="#fff"
             viewBox="0 0 484 73"
