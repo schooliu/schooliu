@@ -101,6 +101,7 @@ model Comment {
 
 model Course {
     id              Int   @id @default(autoincrement())
+    slug            String  @unique
     title           String
     image           String
     quiz            Quiz[]
@@ -111,15 +112,17 @@ model Course {
 }
 
 model Chapter {
-    id              Int   @id @default(autoincrement())
+    id              Int     @id @default(autoincrement())
+    slug            String  @unique
     name            String
     content         String
-    course          Course @relation(fields: [courseID], references: [id])
+    course          Course  @relation(fields: [courseID], references: [id])
     courseID        Int
 }
 
 model Quiz{
     id              Int   @id @default(autoincrement())
+    slug            String  @unique
     questions       Question[]
     likedBy         User[]
     course          Course  @relation(fields: [courseID], references: [id])
@@ -187,6 +190,7 @@ enum CommentTag{
 
 model Group{
     id              Int   @id @default(autoincrement())
+    slug            String  @unique
     courses         Course[]
     parentGroup     Group? @relation(name: "parent", fields: [parentGroupID], references: [id])
     parentGroupID   Int?
@@ -199,6 +203,7 @@ model Group{
 
 model University{
     id              Int   @id @default(autoincrement())
+    slug            String  @unique
     name            String
     image           String
     groups          Group[]
