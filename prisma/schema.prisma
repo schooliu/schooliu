@@ -131,31 +131,22 @@ model Quiz{
 }
 
 model Question{
-    id              Int   @id @default(autoincrement())
-    title           String
-    image           String?
-    type            QuestionType
-    quiz            Quiz  @relation(fields: [quizID], references: [id])
-    quizID          Int
+    id                  Int   @id @default(autoincrement())
+    title               String
+    image               String?
+    type                QuestionType
+    quiz                Quiz  @relation(fields: [quizID], references: [id])
+    quizID              Int
 
-    oneAnswerMCQ        OneAnswerMCQ?
-    multiAnswerMCQ      MultiAnswerMCQ?
+    mCQ                 MCQ?
     numberAnswer        NumberAnswer?
     textAnswer          TextAnswer?
 }
 
-model OneAnswerMCQ{
-    id                  Int   @id   @default(autoincrement())
-    listchoice          String[]
-    answer              String
-    question            Question    @relation(fields: [questionID], references: [id])
-    questionID          Int         @unique
-}
-
-model MultiAnswerMCQ{
+model MCQ{
     id                  Int   @id @default(autoincrement())
     listchoice          String[]
-    answers             String[]
+    answers             Boolean[]
     question            Question    @relation(fields: [questionID], references: [id])
     questionID          Int         @unique
 }
