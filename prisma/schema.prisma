@@ -50,7 +50,8 @@ model Session {
 model User {
     // User basic properties
     id                      String    @id @default(cuid())
-    name                    String?
+    firstname               String?
+    lastname                String?
     email                   String?   @unique
     image                   String?
 
