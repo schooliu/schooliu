@@ -66,6 +66,8 @@ model User {
     commentsLiked           Comment[] @relation("liked")
     commentsDisliked        Comment[] @relation("disliked")
     quizLiked               Quiz[]
+    group                   Group  @relation(fields: [groupId], references: [id])
+    groupId                 Int
 }
 
 model VerificationToken {
@@ -104,6 +106,8 @@ model Course {
     quiz            Quiz[]
     comments        Comment[]
     chapters        Chapter[]
+    group           Group @relation(fields: [groupID], references: [id])
+    groupID         Int
 }
 
 model Chapter {
@@ -184,8 +188,13 @@ enum CommentTag{
 model Group{
     id              Int   @id @default(autoincrement())
     courses         Course[]
-    subgroups       Group[]
-    university      University
+    parentGroup     Group? @relation(name: "parent", fields: [parentGroupID], references: [id])
+    parentGroupID   Int?
+    subgroups       Group[] @relation("parent")
+    university      University @relation(fields: [universityID], references: [id])
+    universityID    Int
+    firstLayerGroup Boolean @default(false)
+    users           User[]
 }
 
 model University{
