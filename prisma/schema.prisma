@@ -67,8 +67,9 @@ model User {
     commentsLiked           Comment[] @relation("liked")
     commentsDisliked        Comment[] @relation("disliked")
     quizLiked               Quiz[]
-    group                   Group  @relation(fields: [groupId], references: [id])
-    groupId                 Int
+    section                 SectionYear  @relation(fields: [sectionID], references: [id])
+    sectionID               String
+    tags                    SectionTag[]
 }
 
 model VerificationToken {
@@ -94,49 +95,47 @@ model Comment {
     description     String
     tag             CommentTag
     course          Course      @relation(fields: [courseID], references: [id])
-    courseID        Int
+    courseID        String
     approvedBy      User[]      @relation("liked")
     disapprovedBy   User[]      @relation("disliked")
     closed          Boolean
 }
 
 model Course {
-    id              Int   @id @default(autoincrement())
-    slug            String  @unique
+    id              String   @id
     title           String
     image           String
     quiz            Quiz[]
     comments        Comment[]
     chapters        Chapter[]
-    group           Group @relation(fields: [groupID], references: [id])
-    groupID         Int
+    section           SectionYear @relation(fields: [sectionID], references: [id])
+    sectionID         String
 }
 
 model Chapter {
-    id              Int     @id @default(autoincrement())
-    slug            String  @unique
+    id              String   @id
     name            String
     content         String
     course          Course  @relation(fields: [courseID], references: [id])
-    courseID        Int
+    courseID        String
 }
 
 model Quiz{
-    id              Int   @id @default(autoincrement())
-    slug            String  @unique
+    id              String   @id
     questions       Question[]
     likedBy         User[]
     course          Course  @relation(fields: [courseID], references: [id])
-    courseID        Int
+    courseID        String
 }
 
 model Question{
     id                  Int   @id @default(autoincrement())
     title               String
     image               String?
+    description         String
     type                QuestionType
     quiz                Quiz  @relation(fields: [quizID], references: [id])
-    quizID              Int
+    quizID              String
 
     mCQ                 MCQ?
     numberAnswer        NumberAnswer?
@@ -180,23 +179,37 @@ enum CommentTag{
     Suggestion
 }
 
-model Group{
-    id              Int   @id @default(autoincrement())
-    slug            String  @unique
-    courses         Course[]
-    parentGroup     Group? @relation(name: "parent", fields: [parentGroupID], references: [id])
-    parentGroupID   Int?
-    subgroups       Group[] @relation("parent")
-    university      University @relation(fields: [universityID], references: [id])
-    universityID    Int
-    firstLayerGroup Boolean @default(false)
-    users           User[]
-}
-
 model University{
-    id              Int   @id @default(autoincrement())
-    slug            String  @unique
+    id              String   @id
     name            String
     image           String
-    groups          Group[]
+    sections          Section[]
+}
+
+model Section{
+    id              String   @id
+    name            String
+    image           String
+    sectionsYear    SectionYear[]
+    university      University @relation(fields: [universityID], references: [id])
+    universityID    String
+}
+
+model SectionYear{
+    id              String   @id
+    name            String
+    image           String
+    courses         Course[]
+    users           User[]
+    section         Section @relation(fields: [sectionID], references: [id])
+    sectionID       String
+    tags            SectionTag[]
+}
+
+model SectionTag{
+    id              Int  @id @default(autoincrement())
+    name            String
+    SectionYear     SectionYear @relation(fields: [sectionYearID], references: [id])
+    sectionYearID   String
+    users           User[]
 }
