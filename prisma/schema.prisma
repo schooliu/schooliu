@@ -50,6 +50,7 @@ model Session {
 model User {
     // User basic properties
     id                      String    @id @default(cuid())
+    name                    String?
     firstname               String?
     lastname                String?
     email                   String?   @unique
@@ -61,16 +62,16 @@ model User {
     sessions                Session[]
 
     // Schooliu properties
-    reputation              Int
+    reputation              Int     @default(0)
     badges                  Badge[]
     commentspublished       Comment[] @relation("commented")
     commentsLiked           Comment[] @relation("liked")
     commentsDisliked        Comment[] @relation("disliked")
     quizLiked               Quiz[]
-    university              University @relation(fields: [universityId], references: [id])
-    universityId            String
-    section                 SectionYear  @relation(fields: [sectionID], references: [id])
-    sectionID               String
+    university              University? @relation(fields: [universityId], references: [id])
+    universityId            String?
+    section                 SectionYear?  @relation(fields: [sectionID], references: [id])
+    sectionID               String?
     tags                    SectionTag[]
 }
 
