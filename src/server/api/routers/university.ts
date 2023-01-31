@@ -9,7 +9,7 @@ export const universityRouter = createTRPCRouter({
             return ctx.prisma.university.findUnique({
                 where: {
                     id: input.id,
-                }
+                },
             });
         }),
 
@@ -25,6 +25,40 @@ export const universityRouter = createTRPCRouter({
                    university : {
                        id : input.id
                    }
+                }
+            });
+        }),
+
+    getCoursesCount: publicProcedure
+        .input(z.object({ id: z.string() }))
+        .query(({ input, ctx }) => {
+            return ctx.prisma.course.count({
+                where: {
+                    section : {
+                        section : {
+                            university : {
+                                id : input.id
+                            }
+                        }
+                   }
+                }
+            });
+        }),
+
+    getChaptersCount: publicProcedure
+        .input(z.object({ id: z.string() }))
+        .query(({ input, ctx }) => {
+            return ctx.prisma.chapter.count({
+                where: {
+                    course : {
+                        section : {
+                            section : {
+                                university : {
+                                    id : input.id
+                                }
+                            }
+                       }
+                    }
                 }
             });
         }),
