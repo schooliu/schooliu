@@ -1,0 +1,132 @@
+@startuml
+class User {
++ id : String
++ name : String
++ email : String
++ image : String
++ reputation : Integer
++ badges : Badge[]
++ group : Group
+}
+
+class Badge {
++ id : String
++ name : String
++ image : String
+}
+
+class Comment{
+    +id : String
+    +publisher : User
+    +title : String
+    +description : String
+    +tag : CommentTag
+    +course : Course
+    +approvedBy : User[]
+    +disapprovedBy : User[]
+    +closed : Boolean
+}
+
+enum CommentTag{
+    Question
+    ErrorFound
+    Imprecision
+    Suggestion
+}
+
+class Course{
+    id : String
+    title : String
+    image : String
+    quiz : Quiz[]
+    comments : Comment[]
+    chapters : Chapter[]
+}
+
+class Quiz{
+    id : String
+    questions : Question[]
+    likedBy : User[]
+}
+
+class Question{
+    id : String
+    title : String
+    image : String
+    type : QuestionType
+
+    oneanswermcq : OneAnswerMCQ?
+    multianswermcq : MultiAnswerMCQ?
+    numberanswer : NumberAnswer?
+    textanswer : TextAnswer?
+}
+
+class OneAnswerMCQ{
+    id : String
+    listchoice : String[]
+    answer : String
+}
+
+class MultiAnswerMCQ{
+    id : String
+    listchoice : String[]
+    answers : String[]
+}
+
+class NumberAnswer{
+    id : String
+    maxanswer : Float
+    minanswer : Float
+}
+
+class TextAnswer{
+    id : String
+    answers : String[]
+}
+
+enum QuestionType{
+    OneAnswerMCQ
+    MultiAnswerMCQ
+    NumberAnswer
+    TextAnswer
+}
+
+class Group{
+    id : String
+    courses : Course[]
+    subgroups : Group[]
+    university : University
+}
+
+class University{
+    id : String
+    name : String
+    image : String
+    groups : Group[]
+}
+
+class Chapter{
+    id : String
+    name : String
+    content : String
+    course : Course
+}
+
+User::badges --> Badge::id
+Comment::approvedBy --> User::id
+Comment::disapprovedBy -l-> User::id
+Course::comments --> Comment::course
+Comment::publisher --> User::id
+Course::quiz --> Quiz::id
+Course::chapters --> Chapter::course
+Group::courses -r-> Course::id
+Quiz::questions --> Question::id
+University::groups -r-> Group::id
+Quiz::likedBy --> User::id
+Question::type --> QuestionType
+Question::oneanswermcq ..> OneAnswerMCQ::id
+Question::multianswermcq ..> MultiAnswerMCQ::id
+Question::numberanswer ..> NumberAnswer::id
+Question::textanswer ..> TextAnswer::id
+Comment::tag -l-> CommentTag
+@enduml
