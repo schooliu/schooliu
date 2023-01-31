@@ -67,6 +67,8 @@ model User {
     commentsLiked           Comment[] @relation("liked")
     commentsDisliked        Comment[] @relation("disliked")
     quizLiked               Quiz[]
+    university              University @relation(fields: [universityId], references: [id])
+    universityId            String
     section                 SectionYear  @relation(fields: [sectionID], references: [id])
     sectionID               String
     tags                    SectionTag[]
@@ -183,7 +185,8 @@ model University{
     id              String   @id
     name            String
     image           String
-    sections          Section[]
+    sections        Section[]
+    users           User[]
 }
 
 model Section{
