@@ -70,8 +70,8 @@ model User {
     quizLiked               Quiz[]
     university              University? @relation(fields: [universityId], references: [id])
     universityId            String?
-    section                 SectionYear?  @relation(fields: [sectionID], references: [id])
-    sectionID               String?
+    section                 SectionYear?  @relation(fields: [sectionYearID], references: [id])
+    sectionYearID           Int?
     tags                    SectionTag[]
 }
 
@@ -98,37 +98,50 @@ model Comment {
     description     String
     tag             CommentTag
     course          Course      @relation(fields: [courseID], references: [id])
-    courseID        String
+    courseID        Int
     approvedBy      User[]      @relation("liked")
     disapprovedBy   User[]      @relation("disliked")
     closed          Boolean
 }
 
 model Course {
-    id              String   @id
-    title           String
-    image           String
-    quiz            Quiz[]
-    comments        Comment[]
-    chapters        Chapter[]
-    section           SectionYear @relation(fields: [sectionID], references: [id])
-    sectionID         String
+    id                  Int     @id @default(autoincrement())
+    title               String
+    slug                String
+    description         String
+    image               String
+    quiz                Quiz[]
+    comments            Comment[]
+    chapters            Chapter[]
+    section             SectionYear @relation(fields: [sectionYearID], references: [id])
+    sectionYearID       Int
+
+    @@unique([title, sectionYearID])
+    @@unique([slug, sectionYearID])
 }
 
 model Chapter {
-    id              String   @id
+    id              Int     @id @default(autoincrement())
+    slug            String
     name            String
     content         String
     course          Course  @relation(fields: [courseID], references: [id])
-    courseID        String
+    courseID        Int
+
+    @@unique([name, courseID])
 }
 
 model Quiz{
-    id              String   @id
+    id              Int   @id @default(autoincrement())
+    name            String
+    slug            String
     questions       Question[]
     likedBy         User[]
     course          Course  @relation(fields: [courseID], references: [id])
-    courseID        String
+    courseID        Int
+
+    @@unique([name, courseID])
+    @@unique([slug, courseID])
 }
 
 model Question{
@@ -138,7 +151,7 @@ model Question{
     description         String
     type                QuestionType
     quiz                Quiz  @relation(fields: [quizID], references: [id])
-    quizID              String
+    quizID              Int
 
     mCQ                 MCQ?
     numberAnswer        NumberAnswer?
@@ -191,29 +204,38 @@ model University{
 }
 
 model Section{
-    id              String   @id
+    id              Int     @id @default(autoincrement())
+    slug            String
     name            String
     image           String
     sectionsYear    SectionYear[]
     university      University @relation(fields: [universityID], references: [id])
     universityID    String
+
+    @@unique([universityID, slug])
 }
 
 model SectionYear{
-    id              String   @id
+    id              Int     @id @default(autoincrement())
+    slug            String
     name            String
     image           String
     courses         Course[]
     users           User[]
-    section         Section @relation(fields: [sectionID], references: [id])
-    sectionID       String
+    section         Section @relation(fields: [universityID, sectionSlug], references: [universityID, slug])
+    universityID    String
+    sectionSlug     String
     tags            SectionTag[]
+
+    @@unique([universityID, sectionSlug, slug])
 }
 
 model SectionTag{
     id              Int  @id @default(autoincrement())
     name            String
     SectionYear     SectionYear @relation(fields: [sectionYearID], references: [id])
-    sectionYearID   String
+    sectionYearID   Int
     users           User[]
+
+    @@unique([sectionYearID, name])
 }
