@@ -113,11 +113,12 @@ model Course {
     quiz                Quiz[]
     comments            Comment[]
     chapters            Chapter[]
-    section             SectionYear @relation(fields: [sectionYearID], references: [id])
-    sectionYearID       Int
+    section             SectionYear @relation(fields: [universityID, sectionSlug, sectionYearSlug], references: [universityID, sectionSlug, slug])
+    sectionSlug         String
+    universityID        String
+    sectionYearSlug     String
 
-    @@unique([title, sectionYearID])
-    @@unique([slug, sectionYearID])
+    @@unique([universityID, sectionSlug, sectionYearSlug, slug])
 }
 
 model Chapter {
