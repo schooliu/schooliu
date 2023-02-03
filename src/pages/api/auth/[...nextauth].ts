@@ -21,6 +21,11 @@ export const authOptions: NextAuthOptions = {
       return session;
     }
   },
+  events: {
+    async signIn(message) {
+        console.log("signIn", message);
+    }
+  },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
