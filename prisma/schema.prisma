@@ -2,248 +2,247 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+  // Further reading:
+  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+  url      = env("DATABASE_URL")
 }
 
 model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String?  @db.Text
-    access_token      String?  @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?  @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    // User basic properties
-    id                      String    @id @default(cuid())
-    name                    String?
-    firstname               String?
-    lastname                String?
-    email                   String?   @unique
-    image                   String?
+  // User basic properties
+  id        String  @id @default(cuid())
+  name      String?
+  firstname String?
+  lastname  String?
+  email     String? @unique
+  image     String?
 
-    // Account & Session
-    emailVerified           DateTime?
-    accounts                Account[]
-    sessions                Session[]
+  // Account & Session
+  emailVerified DateTime?
+  accounts      Account[]
+  sessions      Session[]
 
-    // Schooliu properties
-    reputation              Int     @default(0)
-    badges                  Badge[]
-    commentspublished       Comment[] @relation("commented")
-    commentsLiked           Comment[] @relation("liked")
-    commentsDisliked        Comment[] @relation("disliked")
-    quizLiked               Quiz[]
-    university              University? @relation(fields: [universityId], references: [id])
-    universityId            String?
-    section                 SectionYear?  @relation(fields: [sectionYearID], references: [id])
-    sectionYearID           Int?
-    tags                    SectionTag[]
+  // Schooliu properties
+  reputation        Int          @default(0)
+  badges            Badge[]
+  commentspublished Comment[]    @relation("commented")
+  commentsLiked     Comment[]    @relation("liked")
+  commentsDisliked  Comment[]    @relation("disliked")
+  quizLiked         Quiz[]
+  university        University?  @relation(fields: [universityId], references: [id])
+  universityId      String?
+  section           SectionYear? @relation(fields: [sectionYearID], references: [id])
+  sectionYearID     Int?
+  tags              SectionTag[]
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model Badge {
-    id         Int   @id @default(autoincrement())
-    name       String?
-    image      String?
-    users       User[]
+  id    Int     @id @default(autoincrement())
+  name  String?
+  image String?
+  users User[]
 }
 
 model Comment {
-    id              Int         @id @default(autoincrement())
-    publisher       User        @relation(name: "commented", fields: [publisherID], references: [id])
-    publisherID     String
-    title           String
-    description     String
-    tag             CommentTag
-    course          Course      @relation(fields: [courseID], references: [id])
-    courseID        Int
-    approvedBy      User[]      @relation("liked")
-    disapprovedBy   User[]      @relation("disliked")
-    closed          Boolean
+  id            Int        @id @default(autoincrement())
+  publisher     User       @relation(name: "commented", fields: [publisherID], references: [id])
+  publisherID   String
+  title         String
+  description   String
+  tag           CommentTag
+  course        Course     @relation(fields: [courseID], references: [id])
+  courseID      Int
+  approvedBy    User[]     @relation("liked")
+  disapprovedBy User[]     @relation("disliked")
+  closed        Boolean
 }
 
 model Course {
-    id                  Int     @id @default(autoincrement())
-    title               String
-    slug                String
-    description         String
-    image               String
-    quiz                Quiz[]
-    comments            Comment[]
-    chapters            Chapter[]
-    section             SectionYear @relation(fields: [universityID, sectionSlug, sectionYearSlug], references: [universityID, sectionSlug, slug])
-    sectionSlug         String
-    universityID        String
-    sectionYearSlug     String
+  id              Int         @id @default(autoincrement())
+  title           String
+  slug            String
+  description     String
+  image           String
+  quiz            Quiz[]
+  comments        Comment[]
+  chapters        Chapter[]
+  section         SectionYear @relation(fields: [universityID, sectionSlug, sectionYearSlug], references: [universityID, sectionSlug, slug])
+  sectionSlug     String
+  universityID    String
+  sectionYearSlug String
 
-    @@unique([universityID, sectionSlug, sectionYearSlug, slug])
+  @@unique([universityID, sectionSlug, sectionYearSlug, slug])
 }
 
 model Chapter {
-    id                  Int     @id @default(autoincrement())
-    slug                String
-    name                String
-    content             String
-    course              Course  @relation(fields: [universityID, sectionSlug, sectionYearSlug, courseSlug], references: [universityID, sectionSlug, sectionYearSlug, slug])
-    sectionSlug         String
-    universityID        String
-    sectionYearSlug     String
-    courseSlug          String
+  id              Int    @id @default(autoincrement())
+  slug            String
+  name            String
+  content         String
+  course          Course @relation(fields: [universityID, sectionSlug, sectionYearSlug, courseSlug], references: [universityID, sectionSlug, sectionYearSlug, slug])
+  sectionSlug     String
+  universityID    String
+  sectionYearSlug String
+  courseSlug      String
 
-    @@unique([universityID, sectionSlug, sectionYearSlug, courseSlug, slug])
+  @@unique([universityID, sectionSlug, sectionYearSlug, courseSlug, slug])
 }
 
-model Quiz{
-    id                  Int   @id @default(autoincrement())
-    name                String
-    slug                String
-    questions           Question[]
-    likedBy             User[]
-    course              Course  @relation(fields: [universityID, sectionSlug, sectionYearSlug, courseSlug], references: [universityID, sectionSlug, sectionYearSlug, slug])
-    sectionSlug         String
-    universityID        String
-    sectionYearSlug     String
-    courseSlug          String
-    totalTime           Int   @default(0)
-    totalRuns           Int   @default(0)
+model Quiz {
+  id              Int        @id @default(autoincrement())
+  name            String
+  slug            String
+  questions       Question[]
+  likedBy         User[]
+  course          Course     @relation(fields: [universityID, sectionSlug, sectionYearSlug, courseSlug], references: [universityID, sectionSlug, sectionYearSlug, slug])
+  sectionSlug     String
+  universityID    String
+  sectionYearSlug String
+  courseSlug      String
+  totalTime       Int        @default(0)
+  totalRuns       Int        @default(0)
 
-    @@unique([universityID, sectionSlug, sectionYearSlug, courseSlug, slug])
+  @@unique([universityID, sectionSlug, sectionYearSlug, courseSlug, slug])
 }
 
-model Question{
-    id                  Int   @id @default(autoincrement())
-    title               String
-    image               String?
-    description         String
-    type                QuestionType
-    quiz                Quiz  @relation(fields: [quizID], references: [id])
-    quizID              Int
+model Question {
+  id          Int          @id @default(autoincrement())
+  title       String
+  image       String?
+  description String
+  type        QuestionType
+  quiz        Quiz         @relation(fields: [quizID], references: [id])
+  quizID      Int
 
-    mCQ                 MCQ?
-    numberAnswer        NumberAnswer?
-    textAnswer          TextAnswer?
+  mCQ          MCQ?
+  numberAnswer NumberAnswer?
+  textAnswer   TextAnswer?
 }
 
-model MCQ{
-    id                  Int   @id @default(autoincrement())
-    listchoice          String[]
-    answers             Boolean[]
-    question            Question    @relation(fields: [questionID], references: [id])
-    questionID          Int         @unique
+model MCQ {
+  id         Int       @id @default(autoincrement())
+  listchoice String[]
+  answers    Boolean[]
+  question   Question  @relation(fields: [questionID], references: [id])
+  questionID Int       @unique
 }
 
-model NumberAnswer{
-    id                  Int   @id @default(autoincrement())
-    maxanswer           Float
-    minanswer           Float
-    question            Question    @relation(fields: [questionID], references: [id])
-    questionID          Int         @unique
+model NumberAnswer {
+  id         Int      @id @default(autoincrement())
+  maxanswer  Float
+  minanswer  Float
+  question   Question @relation(fields: [questionID], references: [id])
+  questionID Int      @unique
 }
 
-model TextAnswer{
-    id                  Int   @id @default(autoincrement())
-    answers             String[]
-    question            Question    @relation(fields: [questionID], references: [id])
-    questionID          Int         @unique
+model TextAnswer {
+  id         Int      @id @default(autoincrement())
+  answers    String[]
+  question   Question @relation(fields: [questionID], references: [id])
+  questionID Int      @unique
 }
 
-enum QuestionType{
-    OneAnswerMCQ
-    MultiAnswerMCQ
-    NumberAnswer
-    TextAnswer
+enum QuestionType {
+  MCQ
+  NumberAnswer
+  TextAnswer
 }
 
-enum CommentTag{
-    Question
-    ErrorFound
-    Imprecision
-    Suggestion
+enum CommentTag {
+  Question
+  ErrorFound
+  Imprecision
+  Suggestion
 }
 
-model University{
-    id              String   @id
-    name            String
-    image           String
-    sections        Section[]
-    users           User[]
+model University {
+  id       String    @id
+  name     String
+  image    String
+  sections Section[]
+  users    User[]
 }
 
-model Section{
-    id              Int     @id @default(autoincrement())
-    slug            String
-    name            String
-    image           String
-    sectionsYear    SectionYear[]
-    university      University @relation(fields: [universityID], references: [id])
-    universityID    String
+model Section {
+  id           Int           @id @default(autoincrement())
+  slug         String
+  name         String
+  image        String
+  sectionsYear SectionYear[]
+  university   University    @relation(fields: [universityID], references: [id])
+  universityID String
 
-    @@unique([universityID, slug])
+  @@unique([universityID, slug])
 }
 
-model SectionYear{
-    id              Int     @id @default(autoincrement())
-    slug            String
-    name            String
-    image           String
-    courses         Course[]
-    users           User[]
-    section         Section @relation(fields: [universityID, sectionSlug], references: [universityID, slug])
-    universityID    String
-    sectionSlug     String
-    tags            SectionTag[]
+model SectionYear {
+  id           Int          @id @default(autoincrement())
+  slug         String
+  name         String
+  image        String
+  courses      Course[]
+  users        User[]
+  section      Section      @relation(fields: [universityID, sectionSlug], references: [universityID, slug])
+  universityID String
+  sectionSlug  String
+  tags         SectionTag[]
 
-    @@unique([universityID, sectionSlug, slug])
+  @@unique([universityID, sectionSlug, slug])
 }
 
-model SectionTag{
-    id              Int  @id @default(autoincrement())
-    name            String
-    SectionYear     SectionYear @relation(fields: [sectionYearID], references: [id])
-    sectionYearID   Int
-    users           User[]
+model SectionTag {
+  id            Int         @id @default(autoincrement())
+  name          String
+  SectionYear   SectionYear @relation(fields: [sectionYearID], references: [id])
+  sectionYearID Int
+  users         User[]
 
-    @@unique([sectionYearID, name])
+  @@unique([sectionYearID, name])
 }

@@ -18,6 +18,22 @@ export const quizRouter = createTRPCRouter({
                 where: {
                     id: input.id,
                 },
+                select: {
+                    id: true,
+                    name: true,
+                    questions : {
+                        select: {
+                            id: true,
+                            title: true,
+                            description: true,
+                            image : true,
+                            type : true,
+                            mCQ : true,
+                            numberAnswer : true,
+                            textAnswer : true,
+                        }
+                    }
+                },
             });
         }),
 
@@ -83,6 +99,22 @@ export const quizRouter = createTRPCRouter({
                         slug: input.quizSlug,
                     }
                 },
+                select: {
+                    id: true,
+                    name: true,
+                    questions : {
+                        select: {
+                            id: true,
+                            title: true,
+                            description: true,
+                            image : true,
+                            type : true,
+                            mCQ : true,
+                            numberAnswer : true,
+                            textAnswer : true,
+                        }
+                    }
+                },
             });
         }),
 
@@ -112,13 +144,19 @@ export const quizRouter = createTRPCRouter({
             })
         }))
         .query(({ input, ctx }) => {
-            return ctx.prisma.sectionYear.findMany({
+            return ctx.prisma.quiz.findMany({
                 where: {
-                    section: {
-                        slug:  input.sectionSlug,
-                        university: {
-                            id: input.univID
-                        }
+                    course : {
+                        slug : input.courseSlug,
+                        section: {
+                            slug:  input.sectionYearSlug,
+                            section : {
+                                slug: input.sectionSlug,
+                                university: {
+                                    id: input.univID
+                                }
+                            },
+                        },
                     },
                 },
             });
