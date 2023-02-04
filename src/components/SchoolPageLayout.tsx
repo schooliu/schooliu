@@ -3,6 +3,7 @@ import { Logo } from "./logo";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import { api } from "../utils/api";
 
 export default (({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -17,6 +18,16 @@ export default (({ children }: { children: React.ReactNode }) => {
     }
 
   };
+
+  const { university } = router.query;
+
+
+  const { data } = api.university.getById.useQuery({ id: university as string });
+  const { data: courseCount } = api.university.getCoursesCount.useQuery({ id: university as string });
+  const { data: chapterCount } = api.university.getChaptersCount.useQuery({ id: university as string });
+  const { data: userCount } = api.university.getUserCount.useQuery({ id: university as string });
+
+
   return (
     <div className="min-h-screen bg-slate-200">
       <div className="h-56 relative">
@@ -46,28 +57,27 @@ export default (({ children }: { children: React.ReactNode }) => {
       </div>
 
       <div className="backdrop-blur-lg bg-white/50 p-6 rounded-xl -mt-24 space-y-6 max-w-5xl mx-auto shadow center">
-        <h1 className="font-bold text-3xl flex items-center space-x-2"><span>ESIR</span> <span className="badge">Deuxième année</span>
-          <span className="badge">INF</span></h1>
+        <h1 className="font-bold text-3xl flex items-center space-x-2">{data?.name}</h1>
         <div className="md:grid grid-cols-3 hidden">
           <div className="space-y-2">
             <h2 className="text-neutral/80 text-lg font-bold">
               🧑‍🎓 Étudiants sur Schooliu
             </h2>
-            <h3 className="text-4xl font-bold">210</h3>
+            <h3 className="text-4xl font-bold">{userCount}</h3>
           </div>
 
           <div className="space-y-2">
             <h2 className="text-neutral/80 text-lg font-bold">
               📚 Nombre de matières
             </h2>
-            <h3 className="text-4xl font-bold">15</h3>
+            <h3 className="text-4xl font-bold">{courseCount}</h3>
           </div>
 
           <div className="space-y-2">
             <h2 className="text-neutral/80 text-lg font-bold">
               📝 Nombre de fiche
             </h2>
-            <h3 className="text-4xl font-bold">167</h3>
+            <h3 className="text-4xl font-bold">{chapterCount}</h3>
           </div>
         </div>
       </div>
