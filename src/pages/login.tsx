@@ -23,7 +23,7 @@ import { signIn } from "next-auth/react";
 
 
 async function signInUser() {
-  await signIn("auth0", { callbackUrl: "/rennes-1" });
+  await signIn("auth0", { callbackUrl: "/rennes" });
 }
 
 export default (() => {
