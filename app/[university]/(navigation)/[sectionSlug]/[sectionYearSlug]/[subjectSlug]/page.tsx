@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { university: string, s
   return (
     <div className="space-y-4">
       <h1 className="flex items-center space-x-4 text-xl font-bold">
-        <Link href={`/${params.university}/${params.sectionSlug}/${params.sectionYearSlug}`}>
+        <Link prefetch={false} href={`/${params.university}/${params.sectionSlug}/${params.sectionYearSlug}`}>
           <svg className="h-6 w-6" viewBox="0 0 24 24">
             <path
               d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z" />
