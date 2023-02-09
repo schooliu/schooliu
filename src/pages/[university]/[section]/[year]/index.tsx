@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { NextSeo } from "next-seo";
 import SchoolPageLayout from "../../../../components/SchoolPageLayout";
 import { NextPage } from "next";
 import { api } from "../../../../utils/api";
@@ -68,25 +67,6 @@ export default (() => {
 
   return (
     <>
-      <NextSeo
-        title={`${university} - Schooliu`}
-        description={`Découvrez les cours de Schooliu pour ${university}.`}
-        openGraph={{
-          title: `${university} - Schooliu`,
-          description: `Découvrez les cours de Schooliu pour ${university}.`,
-          images: [
-            {
-              url: `https://schooliu.vercel.app/api/og/university?name=${university}`,
-              width: 800,
-              height: 400,
-              alt: `${university} - Schooliu`,
-              type: "image/png"
-            }
-          ],
-          site_name: "Schooliu"
-
-        }}
-      />
       <SchoolPageLayout>
         <div className="space-y-4">
           <h1 className="font-bold text-3xl">📚 Matières</h1>

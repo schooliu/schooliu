@@ -8,6 +8,7 @@ import { api } from "../../utils/api";
 
 export const getServerSideProps = (async (context) => {
   const session = await getServerAuthSession(context);
+
   if (!session) {
     return {
       redirect: {
