@@ -23,7 +23,7 @@ specifiers:
   daisyui: ^2.47.0
   framer-motion: ^8.4.7
   next: 13.1.1
-  next-auth: ^4.18.7
+  next-auth: ^4.19.2
   next-seo: ^5.15.0
   postcss: ^8.4.14
   prettier: ^2.8.1
@@ -39,7 +39,7 @@ specifiers:
 dependencies:
   '@mdx-js/loader': 2.2.1_webpack@5.75.0
   '@mdx-js/react': 2.2.1_react@18.2.0
-  '@next-auth/prisma-adapter': 1.0.5_bd4lx2c2rys43d3d7o2mw3plau
+  '@next-auth/prisma-adapter': 1.0.5_77bhi65b6v5jbrzr36rs2ojwe4
   '@next/mdx': 13.1.2_vvg67iglxhejglpl7nsv3pjzui
   '@prisma/client': 4.9.0_prisma@4.9.0
   '@radix-ui/react-accordion': 1.1.0_biqbaboplfbrettd7655fr4n2y
@@ -54,7 +54,7 @@ dependencies:
   daisyui: 2.47.0_gbtt6ss3tbiz4yjtvdr6fbrj44
   framer-motion: 8.4.7_biqbaboplfbrettd7655fr4n2y
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
-  next-auth: 4.18.8_q76c2b4vyoegvsbrcwkfvimnai
+  next-auth: 4.19.2_q76c2b4vyoegvsbrcwkfvimnai
   next-seo: 5.15.0_q76c2b4vyoegvsbrcwkfvimnai
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -250,14 +250,14 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@next-auth/prisma-adapter/1.0.5_bd4lx2c2rys43d3d7o2mw3plau:
-    resolution: {integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==}
+  /@next-auth/prisma-adapter/1.0.5_77bhi65b6v5jbrzr36rs2ojwe4:
+    resolution: { integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ== }
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
       '@prisma/client': 4.9.0_prisma@4.9.0
-      next-auth: 4.18.8_q76c2b4vyoegvsbrcwkfvimnai
+      next-auth: 4.19.2_q76c2b4vyoegvsbrcwkfvimnai
     dev: false
 
   /@next/env/13.1.1:
@@ -2220,17 +2220,16 @@ packages:
     dev: false
 
   /nanoid/3.3.4:
-    resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
-    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    resolution: { integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw== }
+    engines: { node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1 }
     hasBin: true
 
   /neo-async/2.6.2:
-    resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+    resolution: { integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw== }
     dev: false
 
-  /next-auth/4.18.8_q76c2b4vyoegvsbrcwkfvimnai:
-    resolution: {integrity: sha512-USP8ihmvB7iCGtkS0+toe2QPrzdbZfkydQZX56JOI9Ft5n/BardOXh3D4wQ2An+vpq/jDKojGlgfv21wVElW7A==}
-    engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0}
+  /next-auth/4.19.2_q76c2b4vyoegvsbrcwkfvimnai:
+    resolution: { integrity: sha512-6V2YG3IJQVhgCAH7mvT3yopTW92gMdUrcwGX7NQ0dCreT/+axGua/JmVdarjec0C/oJukKpIYRgjMlV+L5ZQOQ== }
     peerDependencies:
       next: ^12.2.5 || ^13
       nodemailer: ^6.6.5
