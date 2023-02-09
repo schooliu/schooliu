@@ -10,10 +10,6 @@ export default function({
   return (
     <>
       <div className="flex items-center gap-10 justify-center mb-10">
-        {/*@ts-ignore*/}
-        <div className="radial-progress text-primary"
-             style={{ "--value": percentage, "--size": "7rem", "--thickness": "1rem" }}>{percentage}%
-        </div>
         <div className="font-bold text-3xl text-primary">
           Tu as répondu juste à {correctAnswers} questions sur {totalQuestions}
         </div>
