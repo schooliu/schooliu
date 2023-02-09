@@ -1,4 +1,4 @@
-import prismaClient from "../../../src/utils/prismaClient";
+import prismaClient from "../../../../src/utils/prismaClient";
 import YearCard from "./YearCard";
 
 export default async function Page({ params }: { params: { university: string, sectionSlug: string } }) {

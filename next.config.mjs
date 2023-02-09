@@ -12,6 +12,14 @@ const config = {
   experimental: {
     appDir: true
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*"
+      }
+    ]
+  },
   i18n: {
     locales: ["en"],
     defaultLocale: "en"

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import prismaClient from "../../../../../src/utils/prismaClient";
+import prismaClient from "../../../../../../src/utils/prismaClient";
 import { redirect } from "next/navigation";
 import ExerciceCard from "./ExerciceCard";
 

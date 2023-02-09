@@ -1,10 +1,10 @@
-import { Logo } from "../../src/components/logo";
+import { Logo } from "../../../src/components/logo";
 import Image from "next/image";
 import React from "react";
-import prismaClient from "../../src/utils/prismaClient";
+import prismaClient from "../../../src/utils/prismaClient";
 import { notFound, redirect } from "next/navigation";
 import LogoutButton from "./LogoutButton";
-import { authOptions } from "../../src/pages/api/auth/[...nextauth]";
+import { authOptions } from "../../../src/pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
 export default async function Layout({
