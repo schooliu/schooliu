@@ -24,7 +24,7 @@
     "@trpc/server": "^10.8.1",
     "daisyui": "^2.47.0",
     "framer-motion": "^8.4.7",
-    "next": "^13.1.6",
+    "next": "^13.1.7-canary.10",
     "next-auth": "^4.19.2",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
