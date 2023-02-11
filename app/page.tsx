@@ -1,11 +1,11 @@
 import { Logo } from "../src/components/logo";
 import Image from "next/image";
 import LoginButton from "./LoginButton";
-import { unstable_getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../src/pages/api/auth/[...nextauth]";
 
 export default async function Page() {
-  const session = await unstable_getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="h-screen flex flex-col">

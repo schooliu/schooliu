@@ -5,7 +5,7 @@ import prismaClient from "../../../src/utils/prismaClient";
 import { notFound, redirect } from "next/navigation";
 import LogoutButton from "./LogoutButton";
 import { authOptions } from "../../../src/pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 
 export default async function Layout({
                                        children,
@@ -13,7 +13,7 @@ export default async function Layout({
                                      }: { children: React.ReactNode, params: { university: string } }) {
 
 
-  const session = await unstable_getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/");
   }
