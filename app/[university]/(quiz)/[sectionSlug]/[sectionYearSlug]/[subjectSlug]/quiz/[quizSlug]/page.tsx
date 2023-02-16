@@ -1,7 +1,8 @@
 import prismaClient from "../../../../../../../../src/utils/prismaClient";
 import QuizMainBlock from "./QuizMainBlock";
+import { notFound } from "next/navigation";
 
-export const revalidate = 0; // revalidate every hour
+export const revalidate = 0;
 
 
 export default async function QuizPage({
@@ -37,14 +38,9 @@ export default async function QuizPage({
     }
   });
 
-  // if (!quiz) {
-  //   notFound();
-  // }
-
   if (!quiz) {
-    return <div></div>;
+    notFound();
   }
-
 
   return (
     <>
