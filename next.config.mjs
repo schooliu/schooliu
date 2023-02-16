@@ -9,9 +9,20 @@
 const config = {
   reactStrictMode: true,
   swcMinify: true,
+  experimental: {
+    appDir: true
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*"
+      }
+    ]
+  },
   i18n: {
     locales: ["en"],
-    defaultLocale: "en",
-  },
+    defaultLocale: "en"
+  }
 };
 export default config;
