@@ -56,7 +56,18 @@ export default async function Page({ params }: { params: { university: string, s
 
 
       <div className="divider"></div>
-      <h1 className="font-bold text-3xl">📝 Exercices</h1>
+      <h1 className="font-bold text-3xl flex items-center gap-4">
+        <span>📝 Exercices</span>
+
+        <Link
+          href={`/${params.university}/${params.sectionSlug}/${params.sectionYearSlug}/${params.subjectSlug}/new-quiz`}
+          className="btn btn-ghost btn-sm">
+          <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus-thick</title>
+            <path d="M20 14H14V20H10V14H4V10H10V4H14V10H20V14Z" />
+          </svg>
+        </Link>
+      </h1>
+
       <div className="space-y-4">
         {course.quiz.map(quiz => (
           <ExerciceCard key={quiz.id}
