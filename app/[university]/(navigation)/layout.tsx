@@ -2,10 +2,11 @@ import { Logo } from "../../../src/components/logo";
 import Image from "next/image";
 import React from "react";
 import prismaClient from "../../../src/utils/prismaClient";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import LogoutButton from "./LogoutButton";
 import { authOptions } from "../../../src/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import { getUniversity } from "../head";
 
 export default async function Layout({
                                        children,
@@ -19,14 +20,7 @@ export default async function Layout({
   }
 
 
-  const universityData = await prismaClient.university.findUnique({
-    where: {
-      id: params.university
-    }
-  });
-  if (!universityData) {
-    notFound();
-  }
+  const universityData = await getUniversity(params.university);
 
 
   const studentCount = await prismaClient.user.count({
