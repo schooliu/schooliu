@@ -15,7 +15,8 @@ export default function TextInput({ label, type = "text", register, name, errors
   return (
     <div className="form-control w-full">
       <label className="label" htmlFor={name}>
-        <span className="label-text text-primary">{label}</span>
+        <span className="label-text text-primary">{label}<span
+          className="text-red-500">{validationSchema?.required && "*"}</span></span>
       </label>
       <input {...register(name, validationSchema)} type={type} className="input input-bordered w-full input-primary" />
       {errors && errors[name]?.type === "required" && (
