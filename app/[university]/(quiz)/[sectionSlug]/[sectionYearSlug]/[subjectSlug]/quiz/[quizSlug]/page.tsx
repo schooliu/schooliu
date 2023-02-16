@@ -1,5 +1,4 @@
 import prismaClient from "../../../../../../../../src/utils/prismaClient";
-import { notFound } from "next/navigation";
 import QuizMainBlock from "./QuizMainBlock";
 
 export default async function QuizPage({
@@ -35,8 +34,12 @@ export default async function QuizPage({
     }
   });
 
+  // if (!quiz) {
+  //   notFound();
+  // }
+
   if (!quiz) {
-    notFound();
+    return <div></div>;
   }
 
 
