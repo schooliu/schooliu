@@ -1,6 +1,9 @@
 import prismaClient from "../../../../../../../../src/utils/prismaClient";
 import QuizMainBlock from "./QuizMainBlock";
 
+export const revalidate = 0; // revalidate every hour
+
+
 export default async function QuizPage({
                                          params: {
                                            university,
