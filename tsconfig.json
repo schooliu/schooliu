@@ -28,7 +28,8 @@
       "$components/*": [
         "components/*"
       ]
-    }
+    },
+    "baseUrl": "."
   },
   "include": [
     "next-env.d.ts",
