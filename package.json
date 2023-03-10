@@ -23,7 +23,7 @@
     "@trpc/react-query": "^10.8.1",
     "@trpc/server": "^10.8.1",
     "daisyui": "^2.47.0",
-    "next": "13.2.3",
+    "next": "13.2.4",
     "next-auth": "^4.19.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
