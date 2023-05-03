@@ -2,7 +2,7 @@ import { Logo } from "../src/components/logo";
 import Image from "next/image";
 import LoginButton from "./LoginButton";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../src/pages/api/auth/[...nextauth]";
+import {authOptions} from "./api/auth/[...nextauth]/route";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
