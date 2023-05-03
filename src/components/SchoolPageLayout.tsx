@@ -3,7 +3,6 @@ import { Logo } from "./logo";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { api } from "../utils/api";
 import { NextSeo } from "next-seo";
 
 export default (({ children }: { children: React.ReactNode }) => {
@@ -22,16 +21,14 @@ export default (({ children }: { children: React.ReactNode }) => {
 
   const { university } = router.query;
 
-  const { data, isError } = api.university.getById.useQuery({ id: university as string });
-  const { data: courseCount } = api.university.getCoursesCount.useQuery({ id: university as string });
-  const { data: chapterCount } = api.university.getChaptersCount.useQuery({ id: university as string });
-  const { data: userCount } = api.university.getUserCount.useQuery({ id: university as string });
-
+  const courseCount = 5;
+    const chapterCount = 10;
+    const userCount = 100;
 
   return (
     <>
       <NextSeo
-        title={`${data?.name} - Schooliu`}
+        title={`Schooliu`}
         description={`Découvrez les cours de Schooliu pour ${university}.`}
         openGraph={{
           title: `${university} - Schooliu`,
@@ -77,7 +74,7 @@ export default (({ children }: { children: React.ReactNode }) => {
         </div>
 
         <div className="backdrop-blur-lg bg-white/50 p-6 rounded-xl -mt-24 space-y-6 max-w-5xl mx-auto shadow center">
-          <h1 className="font-bold text-3xl flex items-center space-x-2">{data?.name}</h1>
+          <h1 className="font-bold text-3xl flex items-center space-x-2">Rennes 1</h1>
 
           <div className="md:grid grid-cols-3 hidden">
             <div className="space-y-2">
