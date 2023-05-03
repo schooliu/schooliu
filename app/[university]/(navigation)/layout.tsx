@@ -4,9 +4,10 @@ import React from "react";
 import prismaClient from "../../../src/utils/prismaClient";
 import { redirect } from "next/navigation";
 import LogoutButton from "./LogoutButton";
-import { authOptions } from "../../../src/pages/api/auth/[...nextauth]";
+
 import { getServerSession } from "next-auth/next";
 import { getUniversity } from "../head";
+import {authOptions} from "../../api/auth/[...nextauth]/route";
 
 export default async function Layout({
                                        children,
